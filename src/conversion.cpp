@@ -12,7 +12,6 @@ class LidarSubscriber : public rclcpp::Node
 public:
     LidarSubscriber() : Node("lidar_subscriber")
     {
-        // Initialize the subscriber
         subscription_ = this->create_subscription<sensor_msgs::msg::LaserScan>(
             "/scan", 10, std::bind(&LidarSubscriber::laserCallback, this, std::placeholders::_1));
         publisher_ = this->create_publisher<sensor_msgs::msg::LaserScan>("filtered_lidar", 10);
@@ -22,7 +21,7 @@ private:
     void laserCallback(const sensor_msgs::msg::LaserScan::SharedPtr msg)
     {
         float start_angle = 0.0;
-        float end_angle = 20.0;
+        float end_angle = 90.0;
 
         start_angle *= M_PI / 180.0;
         end_angle *= M_PI / 180.0;
@@ -35,7 +34,6 @@ private:
         for (size_t i = 0; i < msg->ranges.size(); ++i)
         {
             float angle = (increment) * (i);
-            // RCLCPP_INFO(this->get_logger(), "angle_increment: %f", angle);
             if (angle >= start_angle && angle <= end_angle)
             {
                 filtered_msg->ranges.push_back(msg->ranges[i]);
