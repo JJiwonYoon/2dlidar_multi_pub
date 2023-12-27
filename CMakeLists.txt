@@ -1,5 +1,5 @@
 cmake_minimum_required(VERSION 3.5)
-project(2dlidar_multi_pub)
+project(lidar_multi)
 
 # Default to C99
 if(NOT CMAKE_C_STANDARD)
@@ -19,6 +19,14 @@ endif()
 find_package(ament_cmake REQUIRED)
 find_package(rclcpp REQUIRED)
 find_package(sensor_msgs REQUIRED)
+
+add_executable(lidar_conversion src/conversion.cpp)
+ament_target_dependencies(lidar_conversion rclcpp sensor_msgs)
+
+install(TARGETS
+  lidar_conversion
+  DESTINATION lib/${PROJECT_NAME}
+)
 
 if(BUILD_TESTING)
   find_package(ament_lint_auto REQUIRED)

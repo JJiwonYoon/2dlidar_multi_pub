@@ -1,1 +1,1 @@
-# 2dlidar_multi_pub
+# lidar_multi
